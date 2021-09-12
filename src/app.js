@@ -35,3 +35,6 @@ const server = http.createServer(app);
 server.listen(3000, () => {
   console.log("Node API is running on port 3000");
 });
+
+const db = require("../databases/mysql/config.js");
+db.initTables();
