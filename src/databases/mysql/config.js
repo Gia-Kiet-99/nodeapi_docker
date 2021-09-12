@@ -1,15 +1,19 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const knex = require('knex')({
   client: 'mysql2',
   connection: {
-    host: '127.0.0.1',
-    port: 3306,
-    user: 'root',
-    password: '01635413214',
-    database: 'notedb'
+    host: process.env.HOST_NAME,
+    port: process.env.DB_PORT,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.DATABASE_NAME,
   },
   pool: {
-    min: 0,
-    max: 10,
+    min: process.env.MYSQL_MIN_POOL || 0,
+    max: process.env.MYSQL_MAX_POOL || 10,
   }
 });
 

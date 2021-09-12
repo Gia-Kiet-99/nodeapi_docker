@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const noteRoute = require("./routes/note.route");
+const userRoute = require("./routes/user.route");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -13,31 +14,28 @@ if (process.env.NODE_ENV !== "production") {
 app.get("/", (req, res, next) => {
   res.json("Welcome");
 });
-
-app.get("/users", (req, res, next) => {
-  res.send("Function under development");
-});
-
 app.get("/about", (req, res, next) => {
   res.json("About us");
 });
-
 app.use("/notes", noteRoute);
+app.use("/users", userRoute);
 
 app.use((req, res, next) => {
   res.status(404).send("Endpoint not found");
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).send("Something went wrong!!!");
+  res.status(500).json({
+    error_message: err
+  });
 });
 
 const http = require("http");
 const server = http.createServer(app);
+const db = require("./databases/mysql/config.js");
 
-server.listen(3000, () => {
+db.initTables();
+
+server.listen(process.env.PORT || 3000, () => {
   console.log("Node API is running on port 3000");
 });
-
-const db = require("./databases/mysql/config.js");
-db.initTables();
