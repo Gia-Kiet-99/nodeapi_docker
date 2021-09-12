@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 app.get("/", (req, res, next) => {
-  res.json("Welcome");
+  res.json("Welcome to Note API");
 });
 app.get("/about", (req, res, next) => {
   res.json("About us");

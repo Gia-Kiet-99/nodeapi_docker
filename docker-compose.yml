@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  notes:
+    image: node_docker
+    # image: node:12-alpine
+    # command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 3000:3000
+    # working_dir: /app
+    # volumes:
+    #   - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 01635413214
+      DATABASE_NAME: notedb
+      PORT: 3000
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 01635413214
+      MYSQL_DATABASE: notedb
+    volumes:
+      - note-mysql-data:/var/lib/mysql
+volumes:
+  note-mysql-data:
