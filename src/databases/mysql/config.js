@@ -14,38 +14,39 @@ const knex = require('knex')({
   pool: {
     min: process.env.MYSQL_MIN_POOL || 0,
     max: process.env.MYSQL_MAX_POOL || 10,
-  }
+  },
 });
 
 knex
   .raw('SELECT \'Something sweet\';')
   .timeout(5000, { cancel: true })
-  .then(result => {
+  .then((result) => {
     if (result) {
       console.log('MySQL database connection has been established');
     }
   })
-  .catch(err => {
+  .catch((err) => {
     if (err) {
       console.log('Can not connect to MySQL database');
     }
   });
 
 function initTables() {
-  knex.schema.hasTable('users').then(function (exists) {
+  knex.schema.hasTable('users').then((exists) => {
     if (!exists) {
-      return knex.schema.createTable('users', function (table) {
+      return knex.schema.createTable('users', (table) => {
         table.increments('id').primary();
         table.string('name').notNullable();
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at').defaultTo(knex.fn.now());
       });
     }
+    return 0;
   });
 
-  knex.schema.hasTable('notes').then(function (exists) {
+  knex.schema.hasTable('notes').then((exists) => {
     if (!exists) {
-      return knex.schema.createTable('notes', function (table) {
+      return knex.schema.createTable('notes', (table) => {
         table.increments('id').primary();
         table.string('content').notNullable();
         table.integer('user').unsigned().notNullable()
@@ -57,6 +58,7 @@ function initTables() {
         table.timestamp('updated_at').defaultTo(knex.fn.now());
       });
     }
+    return 0;
   });
 }
 

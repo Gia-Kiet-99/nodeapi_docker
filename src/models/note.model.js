@@ -1,8 +1,8 @@
-const { knex: db } = require("../databases/mysql/config");
+const { knex: db } = require('../databases/mysql/config');
 
 async function all() {
   try {
-    return await db("notes");
+    return await db('notes');
   } catch (error) {
     throw Error(error);
   }
@@ -10,7 +10,7 @@ async function all() {
 
 async function add(note) { // note: {user, content}
   try {
-    return await db("notes").insert(note);
+    return await db('notes').insert(note);
   } catch (error) {
     throw Error(error);
   }
@@ -18,5 +18,5 @@ async function add(note) { // note: {user, content}
 
 module.exports = {
   all,
-  add
-}
+  add,
+};

@@ -5,16 +5,22 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "lint": "eslint \"./src/**/*.js\"",
+    "test": "jest"
   },
   "dependencies": {
     "express": "^4.17.1",
     "knex": "^0.95.11",
+    "morgan": "^1.10.0",
     "mysql2": "^2.3.0"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
-    "morgan": "^1.10.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "jest": "^27.2.0",
     "nodemon": "^2.0.12"
   }
 }

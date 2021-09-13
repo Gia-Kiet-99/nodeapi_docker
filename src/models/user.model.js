@@ -1,8 +1,8 @@
-const { knex: db } = require("../databases/mysql/config");
+const { knex: db } = require('../databases/mysql/config');
 
 async function single(userId) {
   try {
-    return await db("users").where({ id: userId });
+    return await db('users').where({ id: userId });
   } catch (error) {
     throw Error(error);
   }
@@ -10,7 +10,7 @@ async function single(userId) {
 
 async function add(user) { // user: {name}
   try {
-    return await db("users").insert(user);
+    return await db('users').insert(user);
   } catch (error) {
     throw Error(error);
   }
@@ -18,5 +18,5 @@ async function add(user) { // user: {name}
 
 module.exports = {
   single,
-  add
-}
+  add,
+};
