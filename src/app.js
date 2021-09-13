@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const http = require('http');
+require('express-async-errors');
 
 const noteRoute = require('./routes/note.route');
 const userRoute = require('./routes/user.route');

@@ -2,7 +2,11 @@ const userModel = require('../models/user.model');
 
 async function getUserById(req, res) {
   const { userId } = req.params;
+
   const user = await userModel.single(userId);
+  if (user === null) {
+    return res.status(204).json();
+  }
 
   res.json(user);
 }
