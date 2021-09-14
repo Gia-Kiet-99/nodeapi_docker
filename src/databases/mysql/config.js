@@ -1,8 +1,11 @@
+import knex from 'knex';
+
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+  const dotenv = await import('dotenv');
+  dotenv.config();
 }
 
-const knex = require('knex')({
+const db = knex({
   client: 'mysql2',
   connection: {
     host: process.env.MYSQL_HOST,
@@ -17,7 +20,7 @@ const knex = require('knex')({
   },
 });
 
-knex
+db
   .raw('SELECT \'Something sweet\';')
   .timeout(5000, { cancel: true })
   .then((result) => {
@@ -32,21 +35,21 @@ knex
   });
 
 function initTables() {
-  knex.schema.hasTable('users').then((exists) => {
+  db.schema.hasTable('users').then((exists) => {
     if (!exists) {
-      return knex.schema.createTable('users', (table) => {
+      return db.schema.createTable('users', (table) => {
         table.increments('id').primary();
         table.string('name').notNullable();
-        table.timestamp('created_at').defaultTo(knex.fn.now());
-        table.timestamp('updated_at').defaultTo(knex.fn.now());
+        table.timestamp('created_at').defaultTo(db.fn.now());
+        table.timestamp('updated_at').defaultTo(db.fn.now());
       });
     }
     return 0;
   });
 
-  knex.schema.hasTable('notes').then((exists) => {
+  db.schema.hasTable('notes').then((exists) => {
     if (!exists) {
-      return knex.schema.createTable('notes', (table) => {
+      return db.schema.createTable('notes', (table) => {
         table.increments('id').primary();
         table.string('content').notNullable();
         table.integer('user').unsigned().notNullable()
@@ -54,12 +57,13 @@ function initTables() {
           .onDelete('RESTRICT')
           .onUpdate('CASCADE')
           .withKeyName('fk_userid_notes_users');
-        table.timestamp('created_at').defaultTo(knex.fn.now());
-        table.timestamp('updated_at').defaultTo(knex.fn.now());
+        table.timestamp('created_at').defaultTo(db.fn.now());
+        table.timestamp('updated_at').defaultTo(db.fn.now());
       });
     }
     return 0;
   });
 }
 
-module.exports = { knex, initTables };
+export { db, initTables };
+// module.exports = { knex, initTables };

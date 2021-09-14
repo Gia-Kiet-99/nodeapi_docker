@@ -1,4 +1,4 @@
-const { knex: db } = require('../databases/mysql/config');
+import { db } from '../databases/mysql/config.js';
 
 async function all() {
   try {
@@ -16,7 +16,7 @@ async function add(note) { // note: {user, content}
   }
 }
 
-module.exports = {
+export default {
   all,
   add,
 };

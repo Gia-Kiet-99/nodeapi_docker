@@ -1,15 +1,15 @@
-const express = require('express');
-const logger = require('morgan');
-const http = require('http');
-require('express-async-errors');
+import express, { json, urlencoded } from 'express';
+import logger from 'morgan';
+import { createServer } from 'http';
+import 'express-async-errors';
 
-const noteRoute = require('./routes/note.route');
-const userRoute = require('./routes/user.route');
+import noteRoute from './routes/note.route.js';
+import userRoute from './routes/user.route.js';
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 app.use(logger('dev'));
 
 app.get('/', (req, res) => {
@@ -30,10 +30,10 @@ app.use((err, req, res) => {
   });
 });
 
-const server = http.createServer(app);
-const db = require('./databases/mysql/config');
+const server = createServer(app);
+import { initTables } from './databases/mysql/config.js';
 
-db.initTables();
+initTables();
 
 server.listen(process.env.PORT || 3000, () => {
   console.log('Node API is running on port 3000');

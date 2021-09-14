@@ -1,4 +1,4 @@
-const noteModel = require('../models/note.model');
+import noteModel from '../models/note.model.js';
 
 async function getAll(req, res) {
   const allNotes = await noteModel.all();
@@ -12,7 +12,7 @@ async function postNote(req, res) {
   res.status(201).json(savedNote);
 }
 
-module.exports = {
+export default {
   getAll,
   postNote,
 };

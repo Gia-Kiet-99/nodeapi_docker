@@ -1,4 +1,4 @@
-const userModel = require('../models/user.model');
+import userModel from '../models/user.model.js';
 
 async function getUserById(req, res) {
   const { userId } = req.params;
@@ -18,7 +18,7 @@ async function createNewUser(req, res) {
   res.json(savedUser);
 }
 
-module.exports = {
+export default {
   getUserById,
   createNewUser,
 };

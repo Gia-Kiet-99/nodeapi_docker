@@ -1,7 +1,9 @@
-const axios = require('axios');
-// const { knex: db } = require('../../src/databases/mysql/config');
+import axios from 'axios';
+// import { db } from '../../src/databases/mysql/config.js';
 
 axios.defaults.baseURL = 'http://localhost:3000';
+
+// jest.mock('axios');
 
 // beforeAll(async () => {
 //   await db('users').insert({ id: 1, name: 'Test Name' });
@@ -12,16 +14,22 @@ axios.defaults.baseURL = 'http://localhost:3000';
 // });
 
 describe('Testing users route: GET requests', () => {
-  test('Get user by id 1', () => {
-    axios.get('/users/1').then(res => {
-      const user = res.data;
-      return expect({
-        id: user.id,
-        name: user.name
-      }).toEqual({
-        id: 1,
-        name: 'Gia Kiet'
-      });
-    });
+  test('Get user by id 1', async () => {
+    const res = await axios.get('/users/1');
+    expect({
+      id: res.data.id,
+      name: res.data.name
+    }).toEqual({ id: 1, name: 'Gia Kiet' });
   });
 });
+
+// describe('Testing users route: POST request', () => {
+//   // afterEach(async () => {
+//   //   await db('users').del().where({ id: 2 });
+//   // });
+
+//   test('Create new user', async () => {
+//     const result = await db('users').insert({ id: 2, name: 'Tu Dinh' });
+//     expect(result).toEqual([2]);
+//   });
+// });

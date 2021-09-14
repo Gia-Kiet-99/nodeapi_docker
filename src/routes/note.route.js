@@ -1,11 +1,10 @@
-const express = require('express');
+import { Router } from 'express';
+import noteController from '../controllers/note.controller.js';
 
-const router = express.Router();
-
-const noteController = require('../controllers/note.controller');
+const router = Router();
 
 router
   .get('/', noteController.getAll)
   .post('/', noteController.postNote);
 
-module.exports = router;
+export default router;
